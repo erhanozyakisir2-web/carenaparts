@@ -1114,6 +1114,7 @@ async function loadDB(){
   else if(storageMode === "local"){ txt.dataset.i18n = "syncLocal"; }
   else { dot.classList.add("off"); txt.dataset.i18n = "syncOff"; }
   txt.textContent = T()[txt.dataset.i18n];
+  if(syncCfg && storageMode === "local"){ toast(T().syncFail); }  // adres var ama buluta ulaşılamadı
 
   customers = (await dbGet("customers")) || [];
   quotes    = (await dbGet("quotes"))    || [];
@@ -1369,7 +1370,13 @@ async function doLogin(){
 }
 async function applySession(s){
   currentUser = s.user;
-  syncCfg = s.url ? {url:s.url, code:s.code} : null;
+  // eski oturumlarda adres boş olabilir — gömülü adresi otomatik devral
+  const url = s.url || DEFAULT_SYNC_URL || lsGet("dburl") || "";
+  if(url && url !== s.url){
+    s.url = url;
+    if(lsGet("session")) lsSet("session", s);   // oturumu güncelle, bir daha sorun olmasın
+  }
+  syncCfg = url ? {url, code:s.code} : null;
   $("loginView").style.display = "none";
   await loadDB();
 }
