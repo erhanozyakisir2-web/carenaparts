@@ -1114,6 +1114,9 @@ async function loadDB(){
   else if(storageMode === "local"){ txt.dataset.i18n = "syncLocal"; }
   else { dot.classList.add("off"); txt.dataset.i18n = "syncOff"; }
   txt.textContent = T()[txt.dataset.i18n];
+  if(storageMode === "sync" && syncCfg){
+    txt.textContent += "  ·  ID: " + syncCfg.code.slice(0,6).toUpperCase();
+  }
   if(syncCfg && storageMode === "local"){ toast(T().syncFail); }  // adres var ama buluta ulaşılamadı
 
   customers = (await dbGet("customers")) || [];
@@ -1355,7 +1358,7 @@ function resolveDbUrl(){
 async function doLogin(){
   const t = T();
   const u = $("l_user").value.trim();
-  const p = $("l_pass").value;
+  const p = $("l_pass").value.trim();   // klavyenin eklediği görünmez boşluklar hesabı değiştirmesin
   const err = $("l_err");
   err.textContent = "";
   if(!u || p.length < 4){ err.textContent = t.loginErrFill; return; }
@@ -1652,6 +1655,11 @@ function init(){
   if(!DEFAULT_SYNC_URL && savedUrl) $("l_dburl").value = savedUrl;
 
   applyLang();
+
+  // uygulamaya geri dönüldüğünde bulut verilerini otomatik tazele
+  document.addEventListener("visibilitychange", ()=>{
+    if(document.visibilityState === "visible" && currentUser && storageMode === "sync") loadDB();
+  });
 
   // kayıtlı oturum varsa doğrudan içeri al
   const sess = lsGet("session") || ssGet("session");
