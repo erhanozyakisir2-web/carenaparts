@@ -304,6 +304,55 @@
   .dash-empty{padding:26px; text-align:center; color:var(--mut); font-size:13.5px;}
   @media(max-width:640px){ .kpi .kv{font-size:21px;} }
 
+  /* ===== Giriş ekranı ===== */
+  .login{
+    position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, #16223D 0%, var(--navy-2) 55%, #31466F 100%); padding:20px;
+  }
+  .login-card{
+    width:100%; max-width:400px; background:#fff; border-radius:18px; padding:34px 30px 28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4); text-align:center;
+  }
+  .login-card .l-logo{width:86px; height:86px; object-fit:contain; margin-bottom:8px;}
+  .login-card h1{font-family:'Unbounded',sans-serif; font-size:21px; font-weight:700; color:var(--ink); letter-spacing:.03em;}
+  .login-card h1 em{font-style:normal; color:var(--orange);}
+  .login-card .l-sub{font-size:13px; color:var(--mut); margin:6px 0 22px;}
+  .login-card .field{text-align:left; margin-bottom:12px;}
+  .login-card .l-remember{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink); margin:4px 0 16px; cursor:pointer;}
+  .login-card .l-remember input{width:16px; height:16px; accent-color:var(--orange); cursor:pointer;}
+  .login-card .l-btn{
+    width:100%; border:0; border-radius:10px; padding:13px; font-size:15px; font-weight:800; letter-spacing:.02em;
+    background:var(--navy); color:#fff; transition:background .15s, transform .12s;
+  }
+  .login-card .l-btn:hover{background:var(--navy-3);}
+  .login-card .l-btn:active{transform:translateY(1px);}
+  .login-card .l-btn:focus-visible{outline:3px solid var(--orange); outline-offset:2px;}
+  .l-err{color:var(--danger); font-size:12.5px; font-weight:700; margin-top:12px; min-height:16px;}
+  .l-note{font-size:11.5px; color:var(--mut); margin-top:14px; line-height:1.55; text-align:left;}
+  .l-adv{margin-top:14px; text-align:left;}
+  .l-adv summary{font-size:12px; color:var(--mut); cursor:pointer; font-weight:700;}
+  .l-adv .field{margin-top:8px;}
+
+  /* alış fiyatı (dahili alan) */
+  .item-row input.cost-in{background:#FFF8EC; border-color:#EFDDBC;}
+  .item-row input.cost-in:focus{border-color:var(--orange); box-shadow:0 0 0 3px rgba(240,138,36,.16);}
+  .row-profit{font-size:11px; font-weight:800; align-self:center; white-space:nowrap;}
+  .row-profit.pos{color:var(--ok);} .row-profit.neg{color:var(--danger);}
+
+  /* kârlılık kartı */
+  .prof-card{
+    background:linear-gradient(120deg, var(--navy) 0%, var(--navy-2) 100%);
+    border-radius:14px; padding:16px 18px; color:#fff; box-shadow:0 3px 14px rgba(20,30,60,.25);
+  }
+  .prof-card .kl{font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#B8C4DC; margin-bottom:12px;}
+  .prof-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:14px;}
+  .prof-item .pl{font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#93A2C4;}
+  .prof-item .pv{font-size:17px; font-weight:800; margin-top:4px; line-height:1.35; word-break:break-word;}
+  .prof-item .pv.sale{color:#fff;} .prof-item .pv.cost{color:#E8B47C;}
+  .prof-item .pv.profit{color:#6FE0A0;} .prof-item .pv.profit.neg{color:#FF9B9B;}
+  .prof-item .pv.margin{color:var(--orange); font-size:24px;}
+  td.prof.pos{color:var(--ok); font-weight:800;} td.prof.neg{color:var(--danger); font-weight:800;}
+
   .toast{
     position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(80px); opacity:0;
     background:var(--navy); color:#fff; padding:11px 20px; border-radius:10px; font-weight:700; font-size:13px;
@@ -328,6 +377,30 @@
 </style>
 </head>
 <body>
+
+<div class="login" id="loginView">
+  <div class="login-card">
+    <img class="l-logo" id="loginLogo" alt="Carena Parts" src="">
+    <h1>Carena<em>parts</em></h1>
+    <p class="l-sub" id="l_sub">Devam etmek için giriş yapın</p>
+    <div class="field">
+      <label id="l_user_lbl">Kullanıcı Adı</label>
+      <input id="l_user" autocomplete="username">
+    </div>
+    <div class="field">
+      <label id="l_pass_lbl">Şifre</label>
+      <input id="l_pass" type="password" autocomplete="current-password">
+    </div>
+    <label class="l-remember"><input type="checkbox" id="l_remember" checked><span id="l_rem_lbl">Beni hatırla</span></label>
+    <button type="button" class="l-btn" id="btnLogin">Giriş Yap</button>
+    <div class="l-err" id="l_err"></div>
+    <details class="l-adv">
+      <summary id="l_adv_lbl">Gelişmiş: Veritabanı adresi</summary>
+      <div class="field"><input id="l_dburl" placeholder="https://...firebasedatabase.app"></div>
+    </details>
+    <p class="l-note" id="l_note">İlk girişinizde hesabınız otomatik oluşur. Aynı kullanıcı adı ve şifreyle giren her cihaz aynı verileri görür. Şifrenizi unutmayın — verilerinize erişimin anahtarı şifrenizdir.</p>
+  </div>
+</div>
 
 <header class="topbar">
   <div class="brand">
@@ -360,6 +433,7 @@
     <button type="button" class="btn btn-ghost" id="btnSaveQuote">💾 <span data-i18n="saveQuote">Teklifi Kaydet</span></button>
     <button type="button" class="btn btn-ghost" id="btnPrint"><span data-i18n="print">Yazdır</span></button>
     <button type="button" class="btn btn-orange" id="btnPdf">⬇ <span data-i18n="pdf">PDF İndir</span></button>
+    <button type="button" class="btn btn-ghost" id="btnLogout" title="Çıkış">⎋</button>
   </div>
 </header>
 
@@ -384,6 +458,16 @@
     <div class="kpi conv"><div class="kl" data-i18n="kConv">Dönüşüm Oranı</div><div class="kv" id="k_conv">—</div><div class="ka" id="k_conv_sub"></div></div>
   </div>
 
+  <div class="prof-card">
+    <div class="kl" id="profTitle">Kârlılık — Kabul Edilen Teklifler</div>
+    <div class="prof-grid">
+      <div class="prof-item"><div class="pl" id="pl_sales">Satış Tutarı</div><div class="pv sale" id="pv_sales">—</div></div>
+      <div class="prof-item"><div class="pl" id="pl_cost">Alış Tutarı</div><div class="pv cost" id="pv_cost">—</div></div>
+      <div class="prof-item"><div class="pl" id="pl_profit">Kâr</div><div class="pv profit" id="pv_profit">—</div></div>
+      <div class="prof-item"><div class="pl" id="pl_margin">Kâr Marjı</div><div class="pv margin" id="pv_margin">—</div></div>
+    </div>
+  </div>
+
   <div class="stackbar-card">
     <div class="kl" data-i18n="kDist">Durum Dağılımı</div>
     <div class="stackbar" id="stackBar"></div>
@@ -394,7 +478,7 @@
     <table class="dtab">
       <thead><tr>
         <th id="dh_no">Teklif No</th><th id="dh_date">Tarih</th><th id="dh_cust">Cari</th>
-        <th id="dh_amt">Tutar</th><th id="dh_st">Durum</th><th></th>
+        <th id="dh_amt">Tutar</th><th id="dh_prof">Kâr</th><th id="dh_st">Durum</th><th></th>
       </tr></thead>
       <tbody id="dashRows"></tbody>
     </table>
@@ -438,6 +522,7 @@
       <h2 data-i18n="secItems">Ürünler</h2>
       <div id="items"></div>
       <button type="button" class="add-item" id="btnAdd">+ <span data-i18n="addItem">Ürün Ekle</span></button>
+      <p class="hint" data-i18n="costHint">Alış fiyatı yalnızca size görünür; belgeye ve PDF'e asla yansımaz.</p>
     </div>
 
     <div class="card">
@@ -482,26 +567,6 @@
         <span class="sync-dot" id="syncDot"></span>
         <span id="syncText" data-i18n="syncOn">Kayıtlar cihazlar arası senkronize saklanıyor.</span>
       </div>
-    </div>
-
-    <div class="card">
-      <h2 data-i18n="secSync">Cihazlar Arası Senkronizasyon</h2>
-      <div class="field">
-        <label data-i18n="syncUrl">Veritabanı Adresi (Firebase URL)</label>
-        <input id="syncUrlIn" placeholder="https://carenaparts-xxxxx-default-rtdb.europe-west1.firebasedatabase.app">
-      </div>
-      <div class="cari-bar" style="margin-top:10px; margin-bottom:0; grid-template-columns:1fr auto;">
-        <div class="field">
-          <label data-i18n="syncCode">Gizli Senkron Kodu</label>
-          <input id="syncCodeIn" autocomplete="off">
-        </div>
-        <button type="button" class="btn-sm" id="btnGenCode" data-i18n="genCode">Üret</button>
-      </div>
-      <div class="backup-row">
-        <button type="button" class="btn-sm warm" id="btnSyncConnect" data-i18n="connect">Bağlan ve Eşitle</button>
-        <button type="button" class="btn-sm red" id="btnSyncOff" data-i18n="disconnect">Bağlantıyı Kes</button>
-      </div>
-      <p class="hint" data-i18n="syncHintText">Aynı adres ve kodu telefonunuza da girdiğinizde iki cihaz otomatik eşitlenir. Kodu şifre gibi saklayın.</p>
     </div>
   </div>
 
@@ -604,6 +669,10 @@ const I18N = {
     secItems:"Ürünler", addItem:"Ürün Ekle",
     qty:"Miktar", unit:"Birim", brand:"Marka", desc:"Cinsi - Açıklama", price:"Birim Fiyatı",
     total:"Toplam", note:"Not", unitDefault:"Adet",
+    costPrice:"Alış Fiyatı (gizli)", rowProfit:"Kâr",
+    profTitle:"Kârlılık — Kabul Edilen Teklifler", pSales:"Satış Tutarı", pCost:"Alış Tutarı",
+    pProfit:"Kâr", pMargin:"Kâr Marjı", colProfit:"Kâr",
+    costHint:"Alış fiyatı yalnızca size görünür; belgeye ve PDF'e asla yansımaz.",
     secTotals:"KDV & Notlar", vatMode:"KDV Durumu", vatIncl:"Fiyatlara KDV dahil",
     vatExcl:"KDV hariç (üzerine eklenecek)", vatNone:"KDV gösterme", vatRate:"KDV %",
     notes:"Not", notesPh:"Teslimat, garanti, geçerlilik koşulları…",
@@ -636,13 +705,12 @@ const I18N = {
     colNo:"Teklif No", colDate:"Tarih", colCust:"Cari", colAmt:"Tutar", colSt:"Durum",
     stPending:"Bekliyor", stAccepted:"Kabul Edildi", stRejected:"Reddedildi",
     accept:"Kabul", reject:"Red", noData:"Bu dönemde teklif yok.",
-    secSync:"Cihazlar Arası Senkronizasyon", syncUrl:"Veritabanı Adresi (Firebase URL)",
-    syncCode:"Gizli Senkron Kodu", genCode:"Üret", connect:"Bağlan ve Eşitle", disconnect:"Bağlantıyı Kes",
     syncCloudOn:"Bulut senkronizasyonu aktif — telefon ve bilgisayar aynı verileri görür.",
-    syncConnected:"Bağlandı! Veriler eşitlendi.", syncFail:"Bağlanılamadı — adresi ve kodu kontrol edin.",
-    syncBadInput:"Geçerli bir veritabanı adresi ve en az 12 karakterlik kod girin.",
-    syncDisconnected:"Bulut bağlantısı kesildi. Kayıtlar bu cihazda tutulmaya devam eder.",
-    syncHintText:"Aynı adres ve kodu telefonunuza da girdiğinizde iki cihaz otomatik eşitlenir. Kodu şifre gibi saklayın."
+    loginSub:"Devam etmek için giriş yapın", username:"Kullanıcı Adı", password:"Şifre",
+    rememberMe:"Beni hatırla", loginBtn:"Giriş Yap", logout:"Çıkış",
+    loginErrFill:"Kullanıcı adı ve en az 4 karakterlik şifre girin.",
+    advDb:"Gelişmiş: Veritabanı adresi",
+    loginNote:"İlk girişinizde hesabınız otomatik oluşur. Aynı kullanıcı adı ve şifreyle giren her cihaz aynı verileri görür. Şifrenizi unutmayın — verilerinize erişimin anahtarı şifrenizdir."
   },
   en:{
     appSub:"Quotation Form", print:"Print", pdf:"Download PDF",
@@ -653,6 +721,10 @@ const I18N = {
     secItems:"Items", addItem:"Add Item",
     qty:"Qty", unit:"Unit", brand:"Brand", desc:"Description", price:"Unit Price",
     total:"Total", note:"Note", unitDefault:"Pcs",
+    costPrice:"Cost Price (hidden)", rowProfit:"Profit",
+    profTitle:"Profitability — Accepted Quotes", pSales:"Sales Amount", pCost:"Cost Amount",
+    pProfit:"Profit", pMargin:"Profit Margin", colProfit:"Profit",
+    costHint:"Cost price is visible only to you; it never appears in the document or PDF.",
     secTotals:"VAT & Notes", vatMode:"VAT Mode", vatIncl:"Prices include VAT",
     vatExcl:"VAT excluded (added on top)", vatNone:"Hide VAT", vatRate:"VAT %",
     notes:"Notes", notesPh:"Delivery, warranty, validity terms…",
@@ -685,13 +757,12 @@ const I18N = {
     colNo:"Quote No", colDate:"Date", colCust:"Customer", colAmt:"Amount", colSt:"Status",
     stPending:"Pending", stAccepted:"Accepted", stRejected:"Rejected",
     accept:"Accept", reject:"Reject", noData:"No quotes in this period.",
-    secSync:"Cross-Device Sync", syncUrl:"Database URL (Firebase)",
-    syncCode:"Secret Sync Code", genCode:"Generate", connect:"Connect & Sync", disconnect:"Disconnect",
     syncCloudOn:"Cloud sync is active — phone and computer see the same data.",
-    syncConnected:"Connected! Data synchronized.", syncFail:"Could not connect — check the URL and code.",
-    syncBadInput:"Enter a valid database URL and a code of at least 12 characters.",
-    syncDisconnected:"Cloud disconnected. Records stay on this device.",
-    syncHintText:"Enter the same URL and code on your phone and both devices sync automatically. Keep the code like a password."
+    loginSub:"Sign in to continue", username:"Username", password:"Password",
+    rememberMe:"Remember me", loginBtn:"Sign In", logout:"Sign Out",
+    loginErrFill:"Enter a username and a password of at least 4 characters.",
+    advDb:"Advanced: Database URL",
+    loginNote:"Your account is created automatically on first sign-in. Any device signing in with the same username and password sees the same data. Don't forget your password — it is the key to your data."
   },
   ru:{
     appSub:"Коммерческое предложение", print:"Печать", pdf:"Скачать PDF",
@@ -702,6 +773,10 @@ const I18N = {
     secItems:"Товары", addItem:"Добавить товар",
     qty:"Кол-во", unit:"Ед.", brand:"Марка", desc:"Наименование", price:"Цена за ед.",
     total:"Сумма", note:"Прим.", unitDefault:"шт",
+    costPrice:"Закупочная цена (скрыта)", rowProfit:"Прибыль",
+    profTitle:"Прибыльность — принятые предложения", pSales:"Продажи", pCost:"Закупка",
+    pProfit:"Прибыль", pMargin:"Маржа", colProfit:"Прибыль",
+    costHint:"Закупочная цена видна только вам и никогда не попадает в документ или PDF.",
     secTotals:"НДС и примечания", vatMode:"Режим НДС", vatIncl:"Цены включают НДС",
     vatExcl:"НДС не включён (добавляется)", vatNone:"Не показывать НДС", vatRate:"НДС %",
     notes:"Примечание", notesPh:"Доставка, гарантия, условия…",
@@ -734,13 +809,12 @@ const I18N = {
     colNo:"№", colDate:"Дата", colCust:"Клиент", colAmt:"Сумма", colSt:"Статус",
     stPending:"Ожидает", stAccepted:"Принято", stRejected:"Отклонено",
     accept:"Принять", reject:"Отклонить", noData:"В этом периоде предложений нет.",
-    secSync:"Синхронизация устройств", syncUrl:"Адрес базы данных (Firebase)",
-    syncCode:"Секретный код", genCode:"Создать", connect:"Подключить", disconnect:"Отключить",
     syncCloudOn:"Облачная синхронизация активна — телефон и компьютер видят одни данные.",
-    syncConnected:"Подключено! Данные синхронизированы.", syncFail:"Не удалось подключиться — проверьте адрес и код.",
-    syncBadInput:"Введите корректный адрес и код не короче 12 символов.",
-    syncDisconnected:"Облако отключено. Записи хранятся на этом устройстве.",
-    syncHintText:"Введите тот же адрес и код на телефоне — устройства синхронизируются автоматически. Храните код как пароль."
+    loginSub:"Войдите, чтобы продолжить", username:"Имя пользователя", password:"Пароль",
+    rememberMe:"Запомнить меня", loginBtn:"Войти", logout:"Выйти",
+    loginErrFill:"Введите имя пользователя и пароль не короче 4 символов.",
+    advDb:"Дополнительно: адрес базы данных",
+    loginNote:"Аккаунт создаётся автоматически при первом входе. Любое устройство с теми же именем и паролем видит одни данные. Не забывайте пароль — это ключ к вашим данным."
   }
 };
 
@@ -748,7 +822,7 @@ const I18N = {
 const state = {
   lang:"tr",
   currency:"TRY",
-  items:[ {qty:1, unit:"Adet", brand:"", desc:"", price:0, note:""} ],
+  items:[ {qty:1, unit:"Adet", brand:"", desc:"", price:0, cost:0, note:""} ],
 };
 const $ = id => document.getElementById(id);
 const T = () => I18N[state.lang];
@@ -786,21 +860,32 @@ function renderItemsEditor(){
       <div style="grid-column:span 2;"><span class="mini-l">${t.price}</span><input type="number" min="0" step="0.01" value="${esc(it.price)}" data-k="price"></div>
       <div><span class="mini-l">${t.note}</span><input value="${esc(it.note)}" data-k="note"></div>
       <div class="row-total" data-rt></div>
+      <div style="grid-column:span 2;"><span class="mini-l">${t.costPrice}</span><input type="number" min="0" step="0.01" class="cost-in" value="${esc(it.cost ?? 0)}" data-k="cost"></div>
+      <div class="row-profit" style="grid-column:span 2;" data-rp></div>
     `;
+    const updateRowCalc = ()=>{
+      const line = (state.items[i].qty||0) * (state.items[i].price||0);
+      const prof = line - (state.items[i].qty||0) * (state.items[i].cost||0);
+      row.querySelector("[data-rt]").textContent = fmtMoney(line);
+      const rp = row.querySelector("[data-rp]");
+      rp.textContent = t.rowProfit + ": " + fmtMoney(prof);
+      rp.classList.toggle("pos", prof >= 0);
+      rp.classList.toggle("neg", prof < 0);
+    };
     row.querySelectorAll("input").forEach(inp=>{
       inp.addEventListener("input", ()=>{
         const k = inp.dataset.k;
-        state.items[i][k] = (k==="qty"||k==="price") ? parseFloat(inp.value)||0 : inp.value;
-        row.querySelector("[data-rt]").textContent = fmtMoney(state.items[i].qty * state.items[i].price);
+        state.items[i][k] = (k==="qty"||k==="price"||k==="cost") ? parseFloat(inp.value)||0 : inp.value;
+        updateRowCalc();
         renderPreview();
       });
     });
     row.querySelector(".del").addEventListener("click", ()=>{
       state.items.splice(i,1);
-      if(!state.items.length) state.items.push({qty:1, unit:t.unitDefault, brand:"", desc:"", price:0, note:""});
+      if(!state.items.length) state.items.push({qty:1, unit:t.unitDefault, brand:"", desc:"", price:0, cost:0, note:""});
       renderItemsEditor(); renderPreview();
     });
-    row.querySelector("[data-rt]").textContent = fmtMoney(it.qty*it.price);
+    updateRowCalc();
     box.appendChild(row);
   });
 }
@@ -915,6 +1000,7 @@ function applyLang(){
   renderQuoteList();
   renderDashboard();
   renderPreview();
+  applyLoginLang();
 }
 
 /* ---------- toast ---------- */
@@ -927,6 +1013,9 @@ function toast(msg){
 }
 
 /* ---------- Depolama (üç kademeli: Firebase bulut → Claude senkron → tarayıcı → bellek) ---------- */
+/* Veritabanı adresi buraya gömülürse kullanıcıların yalnızca kullanıcı adı + şifre girmesi yeterlidir. */
+const DEFAULT_SYNC_URL  = "";   // örn: "https://carenaparts-xxxxx-default-rtdb.europe-west1.firebasedatabase.app"
+
 const memStore = {};
 let storageMode = "mem";   // "sync" | "cloud" | "local" | "mem"
 const LS_PREFIX = "carena:";
@@ -948,7 +1037,6 @@ async function syncPing(){
 }
 
 async function detectStorage(){
-  syncCfg = lsGet("synccfg");
   if(syncCfg && syncCfg.url && syncCfg.code){
     try{ await syncPing(); storageMode = "sync"; return; }
     catch(e){ /* bulut erişilemiyor, alt kademeye in */ }
@@ -961,28 +1049,32 @@ async function detectStorage(){
     storageMode = "local";
   }catch(e){ storageMode = "mem"; }
 }
+function dataKey(key){
+  // her hesabın yerel önbelleği ayrı tutulur
+  return (syncCfg && syncCfg.code ? syncCfg.code.slice(0,8) + ":" : "") + key;
+}
 async function dbGet(key){
   if(storageMode === "sync"){
     try{
       const r = await fetchTO(syncBase() + "/" + key + ".json", {method:"GET"}, 8000);
       if(r.ok){
-        const v = await r.json();          // Firebase eksik anahtar için null döner
-        if(v !== null) lsSet(key, v);      // çevrimdışı önbellek
+        const v = await r.json();               // Firebase eksik anahtar için null döner
+        if(v !== null) lsSet(dataKey(key), v);  // çevrimdışı önbellek
         return v;
       }
     }catch(e){}
-    return lsGet(key);                     // ağ yoksa yerel önbellek
+    return lsGet(dataKey(key));                 // ağ yoksa yerel önbellek
   }
   if(storageMode === "cloud"){
     try{ const r = await window.storage.get(key); return r ? JSON.parse(r.value) : null; }
     catch(e){ return null; }
   }
-  if(storageMode === "local") return lsGet(key);
+  if(storageMode === "local") return lsGet(dataKey(key));
   return memStore[key] ?? null;
 }
 async function dbSet(key, val){
   if(storageMode === "sync"){
-    lsSet(key, val);                       // önce yerel — veri asla kaybolmaz
+    lsSet(dataKey(key), val);                   // önce yerel — veri asla kaybolmaz
     try{
       const r = await fetchTO(syncBase() + "/" + key + ".json",
         {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(val)}, 8000);
@@ -994,7 +1086,7 @@ async function dbSet(key, val){
     try{ await window.storage.set(key, json); return true; }catch(e){}
   }
   if(storageMode === "local" || storageMode === "cloud"){
-    if(lsSet(key, val)) return true;
+    if(lsSet(dataKey(key), val)) return true;
   }
   memStore[key] = val; return false;
 }
@@ -1022,7 +1114,6 @@ async function loadDB(){
   else if(storageMode === "local"){ txt.dataset.i18n = "syncLocal"; }
   else { dot.classList.add("off"); txt.dataset.i18n = "syncOff"; }
   txt.textContent = T()[txt.dataset.i18n];
-  if(syncCfg){ $("syncUrlIn").value = syncCfg.url; $("syncCodeIn").value = syncCfg.code; }
 
   customers = (await dbGet("customers")) || [];
   quotes    = (await dbGet("quotes"))    || [];
@@ -1082,7 +1173,17 @@ function quoteTotal(){
   const mode = $("f_vatmode").value, rate = parseFloat($("f_vatrate").value)||0;
   return mode === "excl" ? sub * (1 + rate/100) : sub;
 }
+function quoteSalesCost(q){
+  // ürün bazlı: satış = adet×fiyat, alış = adet×alış fiyatı (KDV'den bağımsız net rakamlar)
+  let sales = 0, cost = 0;
+  (q.items || []).forEach(it => {
+    sales += (it.qty||0) * (it.price||0);
+    cost  += (it.qty||0) * (it.cost||0);
+  });
+  return {sales, cost, profit: sales - cost};
+}
 function snapshotQuote(){
+  const sc = quoteSalesCost({items: state.items});
   return {
     id:"q" + Date.now(), ts:Date.now(),
     no:$("f_no").value, date:$("f_date").value, valid:$("f_valid").value,
@@ -1091,7 +1192,7 @@ function snapshotQuote(){
     vatmode:$("f_vatmode").value, vatrate:$("f_vatrate").value, notes:$("f_notes").value,
     lang:state.lang, currency:state.currency,
     items:JSON.parse(JSON.stringify(state.items)),
-    total:quoteTotal()
+    total:quoteTotal(), sales:sc.sales, cost:sc.cost
   };
 }
 async function saveQuote(){
@@ -1116,7 +1217,7 @@ function loadQuote(q){
   $("f_taxoff").value = q.taxoff||""; $("f_contact").value = q.contact||""; $("f_pay").value = q.pay||"";
   $("f_vatmode").value = q.vatmode||"incl"; $("f_vatrate").value = q.vatrate||20; $("f_notes").value = q.notes||"";
   state.items = JSON.parse(JSON.stringify(q.items || []));
-  if(!state.items.length) state.items.push({qty:1, unit:T().unitDefault, brand:"", desc:"", price:0, note:""});
+  if(!state.items.length) state.items.push({qty:1, unit:T().unitDefault, brand:"", desc:"", price:0, cost:0, note:""});
   applyLang();
   toast(T().quoteLoaded);
 }
@@ -1177,7 +1278,7 @@ function newBlankQuote(){
   ["f_name","f_addr","f_taxno","f_taxoff","f_contact","f_pay","f_notes"].forEach(id=>$(id).value="");
   $("f_vatmode").value = "incl"; $("f_vatrate").value = 20;
   $("cariSelect").value = "";
-  state.items = [{qty:1, unit:T().unitDefault, brand:"", desc:"", price:0, note:""}];
+  state.items = [{qty:1, unit:T().unitDefault, brand:"", desc:"", price:0, cost:0, note:""}];
   renderItemsEditor(); renderPreview();
 }
 
@@ -1231,39 +1332,51 @@ async function restoreBackup(file){
   }
 }
 
-/* ---------- Bulut senkron bağlantısı ---------- */
-async function connectSync(){
-  const url = $("syncUrlIn").value.trim();
-  const code = $("syncCodeIn").value.trim();
-  if(!/^https:\/\/.+/.test(url) || code.length < 12){ toast(T().syncBadInput); return; }
-  lsSet("synccfg", {url, code});
-  await detectStorage();
-  if(storageMode !== "sync"){ toast(T().syncFail); await loadDB(); return; }
+/* ---------- Giriş & kimlik ---------- */
+let currentUser = null;
 
-  // buluttaki veriyle bu cihazdakini birleştir, sonra buluta yaz
-  const localData = { customers:[...customers], quotes:[...quotes], quoteSeq };
-  customers = []; quotes = []; quoteSeq = 0;
-  const rc = await dbGet("customers"), rq = await dbGet("quotes"), rs = await dbGet("quote_seq");
-  customers = rc || []; quotes = rq || []; quoteSeq = rs || 0;
-  mergeData(localData);
-  await persistAll();
-  await loadDB();
-  toast(T().syncConnected);
+async function sha256hex(s){
+  if(window.crypto && crypto.subtle){
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+    return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  // güvensiz bağlam için yedek (FNV-1a çift tur)
+  let h1 = 0x811c9dc5, h2 = 0x1000193;
+  for(let i=0;i<s.length;i++){ h1 = (h1 ^ s.charCodeAt(i)) * 16777619 >>> 0; h2 = (h2 * 31 + s.charCodeAt(i)) >>> 0; }
+  return (h1.toString(16) + h2.toString(16)).repeat(4).slice(0,40);
 }
-async function disconnectSync(){
-  try{ window.localStorage.removeItem(LS_PREFIX + "synccfg"); }catch(e){}
-  syncCfg = null;
-  $("syncUrlIn").value = ""; $("syncCodeIn").value = "";
-  await loadDB();
-  toast(T().syncDisconnected);
+function ssGet(key){ try{ const v = window.sessionStorage.getItem(LS_PREFIX+key); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function ssSet(key, val){ try{ window.sessionStorage.setItem(LS_PREFIX+key, JSON.stringify(val)); }catch(e){} }
+
+function resolveDbUrl(){
+  return DEFAULT_SYNC_URL || ($("l_dburl") ? $("l_dburl").value.trim() : "") || lsGet("dburl") || "";
 }
-function genSyncCode(){
-  const chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
-  let s = "";
-  const rnd = new Uint32Array(24);
-  (window.crypto || {getRandomValues:a=>{for(let i=0;i<a.length;i++)a[i]=Math.random()*1e9;}}).getRandomValues(rnd);
-  for(let i=0;i<24;i++) s += chars[rnd[i] % chars.length];
-  $("syncCodeIn").value = s;
+async function doLogin(){
+  const t = T();
+  const u = $("l_user").value.trim();
+  const p = $("l_pass").value;
+  const err = $("l_err");
+  err.textContent = "";
+  if(!u || p.length < 4){ err.textContent = t.loginErrFill; return; }
+  $("btnLogin").disabled = true;
+  const code = (await sha256hex(u.toLowerCase() + "::" + p)).slice(0, 40);
+  const url = resolveDbUrl();
+  if(url) lsSet("dburl", url);
+  const session = {user:u, code, url};
+  if($("l_remember").checked) lsSet("session", session); else ssSet("session", session);
+  await applySession(session);
+  $("btnLogin").disabled = false;
+}
+async function applySession(s){
+  currentUser = s.user;
+  syncCfg = s.url ? {url:s.url, code:s.code} : null;
+  $("loginView").style.display = "none";
+  await loadDB();
+}
+function logout(){
+  try{ window.localStorage.removeItem(LS_PREFIX + "session"); }catch(e){}
+  try{ window.sessionStorage.removeItem(LS_PREFIX + "session"); }catch(e){}
+  location.reload();
 }
 
 /* ---------- Dashboard & durumlar ---------- */
@@ -1339,10 +1452,31 @@ function renderDashboard(){
     `<span><i class="dot" style="background:var(--danger)"></i>${esc(t.stRejected)}: ${rej.length}</span>` +
     `<span><i class="dot" style="background:#B4BCCC"></i>${esc(t.stPending)}: ${pen.length}</span>`;
 
+  // kârlılık — kabul edilen teklifler (para birimine göre ayrı toplanır)
+  $("profTitle").textContent = t.profTitle;
+  $("pl_sales").textContent = t.pSales; $("pl_cost").textContent = t.pCost;
+  $("pl_profit").textContent = t.pProfit; $("pl_margin").textContent = t.pMargin;
+  const sMap = {}, cMap = {};
+  acc.forEach(q=>{
+    const sc = quoteSalesCost(q);
+    const cur = q.currency || "TRY";
+    sMap[cur] = (sMap[cur]||0) + sc.sales;
+    cMap[cur] = (cMap[cur]||0) + sc.cost;
+  });
+  const curs = Object.keys(sMap);
+  const joinMap = m => curs.map(c => fmtCur(m[c]||0, c)).join("  +  ") || "—";
+  $("pv_sales").textContent = joinMap(sMap);
+  $("pv_cost").textContent = joinMap(cMap);
+  const pAll = curs.map(c => (sMap[c]||0) - (cMap[c]||0));
+  $("pv_profit").textContent = curs.map((c,i) => fmtCur(pAll[i], c)).join("  +  ") || "—";
+  $("pv_profit").classList.toggle("neg", pAll.some(v => v < 0) && !pAll.some(v => v > 0));
+  const totS = curs.reduce((a,c)=>a+(sMap[c]||0),0), totC = curs.reduce((a,c)=>a+(cMap[c]||0),0);
+  $("pv_margin").textContent = totS > 0 ? Math.round((totS - totC) / totS * 100) + "%" : "—";
+
   // tablo başlıkları
   $("dh_no").textContent = t.colNo; $("dh_date").textContent = t.colDate;
   $("dh_cust").textContent = t.colCust; $("dh_amt").textContent = t.colAmt;
-  $("dh_st").textContent = t.colSt;
+  $("dh_prof").textContent = t.colProfit; $("dh_st").textContent = t.colSt;
 
   // numaraya göre sıralı tablo
   const rows = $("dashRows");
@@ -1353,12 +1487,14 @@ function renderDashboard(){
   sorted.forEach(q=>{
     const st = q.status || "pending";
     const stLabel = st === "accepted" ? t.stAccepted : st === "rejected" ? t.stRejected : t.stPending;
+    const sc = quoteSalesCost(q);
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td class="no">${esc(q.no || "—")}</td>
       <td>${esc(fmtDate(q.date))}</td>
       <td>${esc(q.name || "—")}</td>
       <td class="amt">${esc(fmtCur(q.total || 0, q.currency || "TRY"))}</td>
+      <td class="prof ${sc.profit >= 0 ? "pos" : "neg"}">${esc(fmtCur(sc.profit, q.currency || "TRY"))}</td>
       <td><span class="badge ${st}">${esc(stLabel)}</span></td>
       <td><div class="st-actions">
         <button type="button" class="st-btn acc ${st==="accepted"?"on":""}" title="${esc(t.accept)}" aria-label="${esc(t.accept)}">✓</button>
@@ -1468,7 +1604,7 @@ function init(){
     .forEach(id => $(id).addEventListener("input", renderPreview));
 
   $("btnAdd").addEventListener("click", ()=>{
-    state.items.push({qty:1, unit:T().unitDefault, brand:"", desc:"", price:0, note:""});
+    state.items.push({qty:1, unit:T().unitDefault, brand:"", desc:"", price:0, cost:0, note:""});
     renderItemsEditor(); renderPreview();
   });
   $("btnPdf").addEventListener("click", downloadPdf);
@@ -1500,12 +1636,31 @@ function init(){
       renderDashboard();
     });
   });
-  $("btnSyncConnect").addEventListener("click", connectSync);
-  $("btnSyncOff").addEventListener("click", disconnectSync);
-  $("btnGenCode").addEventListener("click", genSyncCode);
+  $("btnLogin").addEventListener("click", doLogin);
+  $("l_pass").addEventListener("keydown", e=>{ if(e.key === "Enter") doLogin(); });
+  $("l_user").addEventListener("keydown", e=>{ if(e.key === "Enter") $("l_pass").focus(); });
+  $("btnLogout").addEventListener("click", logout);
+  $("loginLogo").src = $("docLogo").src;   // amblemli logoyu giriş ekranında da kullan
+  const savedUrl = lsGet("dburl");
+  if(!DEFAULT_SYNC_URL && savedUrl) $("l_dburl").value = savedUrl;
 
   applyLang();
-  loadDB();
+
+  // kayıtlı oturum varsa doğrudan içeri al
+  const sess = lsGet("session") || ssGet("session");
+  if(sess && sess.user && sess.code){ applySession(sess); }
+  else { $("l_user").focus(); }
+}
+function applyLoginLang(){
+  const t = T();
+  $("l_sub").textContent = t.loginSub;
+  $("l_user_lbl").textContent = t.username;
+  $("l_pass_lbl").textContent = t.password;
+  $("l_rem_lbl").textContent = t.rememberMe;
+  $("btnLogin").textContent = t.loginBtn;
+  $("l_adv_lbl").textContent = t.advDb;
+  $("l_note").textContent = t.loginNote;
+  $("btnLogout").title = t.logout;
 }
 init();
 </script>
